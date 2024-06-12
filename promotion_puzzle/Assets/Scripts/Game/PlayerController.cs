@@ -110,8 +110,11 @@ public class PlayerController : MonoBehaviour
 
         //フロントエンド処理
         //プレイヤーを移動
+        //Transform trans = playerList[selectedPlayer].currentObj.transform;
+        //Vector3 endPos = squareController.SquareArray[selectedAlph, selectedNum].position;
+        //MoveToPosAnim.StartAnim(endPos, trans);
         playerList[selectedPlayer].currentObj.transform.position = squareController.SquareArray[selectedAlph, selectedNum].position;
-
+        //Debug.Log("end");
     }
 
     public void Init(int stageNum)
