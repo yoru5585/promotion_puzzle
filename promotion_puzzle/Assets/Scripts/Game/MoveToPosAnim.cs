@@ -4,30 +4,20 @@ using UnityEngine;
 
 public static class MoveToPosAnim
 {
-    public static void StartAnim(Vector3 targetPos, Transform trans)
+    public static IEnumerator StartAnim(Vector3 targetPos, Transform objectToMove, float seconds = 0.6f)
     {
-        Vector3 startPos = trans.position;
+        float elapsedTime = 0;
+        Vector3 startPos = objectToMove.position;
         Vector3 endPos = targetPos;
-        float speed = 5.0f;
 
-        //二点間の距離を代入(スピード調整に使う)
-        float distance_two = Vector3.Distance(startPos, endPos);
-        float present_Location;
-        int index = 0;
-        while (index < 10000)
+        while (elapsedTime < seconds)
         {
-            // 現在の位置
-            present_Location = (Time.time * speed) / distance_two;
-            // オブジェクトの移動
-            trans.position = Vector3.Lerp(startPos, endPos, present_Location) * Time.deltaTime;
-            
-            index++;
-            Debug.Log(present_Location);
-
-            if (trans.position.Equals(targetPos))
-            {
-                break;
-            }
+            Debug.Log(elapsedTime);
+            Vector3 tmp = Vector3.Lerp(startPos, endPos, (elapsedTime / seconds));
+            objectToMove.position = new Vector3(tmp.x, 0.01f, tmp.z);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+        objectToMove.position = endPos;
     }
 }

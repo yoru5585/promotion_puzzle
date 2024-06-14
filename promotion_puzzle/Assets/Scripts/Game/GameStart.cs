@@ -83,6 +83,7 @@ public class GameStart : MonoBehaviour
     void ShowStageText()
     {
         cameraController.Stop();
+        playerController.DestroyPlayer();
         stageAnim.gameObject.GetComponent<TextMeshProUGUI>().text = $"STAGE {currentStageNum + 1}";
         stageAnim.SetTrigger("StageTrigger");
     }

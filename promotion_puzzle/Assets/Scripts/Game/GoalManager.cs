@@ -99,4 +99,13 @@ public class GoalManager : MonoBehaviour
             goalList.Add(origin.Clone());
         }
     }
+
+    public bool CheckClear(int playerNum)
+    {
+        if (playerNum == 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }

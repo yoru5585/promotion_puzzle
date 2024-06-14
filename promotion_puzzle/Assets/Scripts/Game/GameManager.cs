@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
                     //プレイヤーオブジェクトをクイーンに置き換える
                     playerController.ReplaceGoalPlayer();
 
-                    if (playerController.GetPlayerListCount() == 0)
+                    if (goalManager.CheckClear(playerController.GetCurrentPlayerNum()))
                     {
                         //クリア
                         goalManager.ShowResult();

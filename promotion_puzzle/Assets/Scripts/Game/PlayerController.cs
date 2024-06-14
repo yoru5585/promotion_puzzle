@@ -10,6 +10,8 @@ public class PlayerSquare
     public int currentNum;
     //プレイヤーオブジェクト
     public GameObject currentObj;
+    //ゴールしたか
+    public bool IsGoal;
     public PlayerSquare Clone()
     {
         // Object型で返ってくるのでキャストが必要
@@ -79,6 +81,12 @@ public class PlayerController : MonoBehaviour
         {
             foreach (PlayerSquare player in playerList)
             {
+                //ゴールしているプレイヤーは飛ばす
+                if (player.IsGoal)
+                {
+                    continue;
+                }
+
                 //プレイヤーを調査
                 if (player.currentAlphabet == squ[0] && player.currentNum == squ[1])
                 {
@@ -110,10 +118,10 @@ public class PlayerController : MonoBehaviour
 
         //フロントエンド処理
         //プレイヤーを移動
-        //Transform trans = playerList[selectedPlayer].currentObj.transform;
-        //Vector3 endPos = squareController.SquareArray[selectedAlph, selectedNum].position;
-        //MoveToPosAnim.StartAnim(endPos, trans);
-        playerList[selectedPlayer].currentObj.transform.position = squareController.SquareArray[selectedAlph, selectedNum].position;
+        Transform trans = playerList[selectedPlayer].currentObj.transform;
+        Vector3 endPos = squareController.SquareArray[selectedAlph, selectedNum].position;
+        StartCoroutine(MoveToPosAnim.StartAnim(endPos, trans));
+        //playerList[selectedPlayer].currentObj.transform.position = squareController.SquareArray[selectedAlph, selectedNum].position;
         //Debug.Log("end");
     }
 
@@ -141,6 +149,12 @@ public class PlayerController : MonoBehaviour
     {
         foreach (PlayerSquare player in playerList)
         {
+            //ゴールしているオブジェクトは飛ばす
+            if (player.IsGoal)
+            {
+                continue;
+            }
+
             int x = player.currentAlphabet;
             int z = player.currentNum;
 
@@ -163,6 +177,14 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject obj in movableList)
         {
             Destroy(obj);
+        }
+    }
+
+    public void DestroyPlayer()
+    {
+        foreach (PlayerSquare player in playerList)
+        {
+            Destroy(player.currentObj);
         }
     }
 
@@ -219,8 +241,9 @@ public class PlayerController : MonoBehaviour
 
     public void ReplaceGoalPlayer()
     {
-        Destroy(playerList[selectedPlayer].currentObj);
-        playerList.RemoveAt(selectedPlayer);
+        playerList[selectedPlayer].currentObj.transform.GetChild(1).gameObject.SetActive(true);
+        playerList[selectedPlayer].currentObj.transform.GetChild(0).gameObject.SetActive(false);
+        playerList[selectedPlayer].IsGoal = true;
     }
 
     public void SetPlayerList(int stageNum)
@@ -232,8 +255,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public int GetPlayerListCount()
+    public int GetCurrentPlayerNum()
     {
-        return playerList.Count;
+        int num = 0;
+        foreach (PlayerSquare player in playerList)
+        {
+            if (player.IsGoal)
+            {
+                continue;
+            }
+            num++;
+        }
+        return num;
     }
 }
