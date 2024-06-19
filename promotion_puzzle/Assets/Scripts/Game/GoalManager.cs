@@ -76,6 +76,7 @@ public class GoalManager : MonoBehaviour
             {
                 Destroy(goal.Effect);
                 goalList.Remove(goal);
+                squareController.SquareArray[goal.Alphabet, goal.Num].state = Square.SquareState.Block;
                 return true;
             }
         }

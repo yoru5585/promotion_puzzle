@@ -29,7 +29,7 @@ public class SquareController : MonoBehaviour
             for (int x = 0; x < 8; x++)
             {
                 //リストに設定
-                Square squ = new Square(alphabet[x], z, 0);
+                Square squ = new Square(x, z, 0);
                 SquareArray[x, z] = squ;
 
                 //場所を設定
@@ -41,7 +41,7 @@ public class SquareController : MonoBehaviour
                 //オブジェクトを生成
                 GameObject obj = Instantiate(originObj, squareParentTrans);
                 obj.transform.localPosition = squ.position;
-                obj.name = $"{x} {z}";
+                obj.name = $"{alphabet[x]} {z}";
             }
         }
     }

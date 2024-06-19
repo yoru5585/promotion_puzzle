@@ -231,6 +231,12 @@ public class PlayerController : MonoBehaviour
                 continue;
             }
 
+            //ブロックは飛ばす
+            if (squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Block)
+            {
+                continue;
+            }
+
             //返り値に格納
             int[] tmp = { x + px, z + pz };
             result.Add(tmp);
