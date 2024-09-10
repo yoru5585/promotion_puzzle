@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 [System.Serializable]
 public class PlayerSquare
 {
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour
     int selectedAlph, selectedNum;
     //選択したプレイヤー
     int selectedPlayer;
+    //アルファベット
+    string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
 
     SquareController squareController;
@@ -64,7 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             string name = hitObject.transform.parent.name;
             Debug.Log(name);
-            selectedAlph = int.Parse(name.Split(" ")[0]);
+            selectedAlph = Array.IndexOf(alphabet, name.Split(" ")[0]);
             selectedNum = int.Parse(name.Split(" ")[1]);
             return CheckMovable();
         }
