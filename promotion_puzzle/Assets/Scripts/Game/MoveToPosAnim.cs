@@ -19,5 +19,6 @@ public static class MoveToPosAnim
             yield return null;
         }
         objectToMove.position = endPos;
+        GameObject.Find("SE").GetComponent<AudioSource>().Play();
     }
 }

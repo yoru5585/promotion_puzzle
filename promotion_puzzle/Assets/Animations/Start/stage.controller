@@ -58,6 +58,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: Blend
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -222,7 +228,7 @@ AnimatorStateMachine:
     m_Position: {x: 400, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 827748951429837762}
-    m_Position: {x: 550, y: 120, z: 0}
+    m_Position: {x: 560, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7265181742907819577}
     m_Position: {x: 700, y: -70, z: 0}

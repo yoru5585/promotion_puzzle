@@ -16,7 +16,7 @@ public class Square
     }
 
     //アルファベット列
-    public string alphabet;
+    public int alphabet;
     //数字行
     public int num;
     //状態
@@ -24,7 +24,7 @@ public class Square
     //ゲーム上の場所
     public Vector3 position;
 
-    public Square(string alphabet, int num, SquareState state)
+    public Square(int alphabet, int num, SquareState state)
     {
         this.alphabet = alphabet;
         this.num = num;

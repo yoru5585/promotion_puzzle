@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 [System.Serializable]
 public class PlayerSquare
 {
-    //ƒAƒ‹ƒtƒ@ƒxƒbƒgs
+    //ï¿½Aï¿½ï¿½ï¿½tï¿½@ï¿½xï¿½bï¿½gï¿½s
     public int currentAlphabet;
-    //”š—ñ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public int currentNum;
-    //ƒvƒŒƒCƒ„[ƒIƒuƒWƒFƒNƒg
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
     public GameObject currentObj;
-    //ƒS[ƒ‹‚µ‚½‚©
+    //ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool IsGoal;
     public PlayerSquare Clone()
     {
-        // ObjectŒ^‚Å•Ô‚Á‚Ä‚­‚é‚Ì‚ÅƒLƒƒƒXƒg‚ª•K—v
+        // Objectï¿½^ï¿½Å•Ô‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚ÅƒLï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Kï¿½v
         return (PlayerSquare)MemberwiseClone();
     }
 }
 public class PlayerController : MonoBehaviour
 {
-    //ƒvƒŒƒCƒ„[‚Ìî•ñ‚ğ‚Ü‚Æ‚ß‚½ƒŠƒXƒg
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½Ü‚Æ‚ß‚ï¿½ï¿½ï¿½ï¿½Xï¿½g
     [SerializeField] List<PlayerSquare> playerList = new List<PlayerSquare>();
-    //¶¬‚·‚éƒvƒŒƒCƒ„[‚Ìprefab
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½prefab
     [SerializeField] GameObject playerPrefab;
-    //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚Ìprefab
+    //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½ï¿½prefab
     [SerializeField] GameObject movablePrefab;
-    //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚ÌƒŠƒXƒg
+    //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½g
     List<GameObject> movableList = new List<GameObject>();
-    //‘I‘ğ‚µ‚½ƒ}ƒX–Ú
+    //ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½Xï¿½ï¿½
     int selectedAlph, selectedNum;
-    //‘I‘ğ‚µ‚½ƒvƒŒƒCƒ„[
+    //ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[
     int selectedPlayer = -1;
 
 
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     public bool CheckClickedObject()
     {
-        //hit‚µ‚½ƒIƒuƒWƒFƒNƒg
+        //hitï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
         GameObject hitObject = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             string name = hitObject.transform.parent.name;
             Debug.Log(name);
-            selectedAlph = int.Parse(name.Split(" ")[0]);
+            selectedAlph = Array.IndexOf(alphabet, name.Split(" ")[0]);
             selectedNum = int.Parse(name.Split(" ")[1]);
             return true;
         }
@@ -72,22 +73,22 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    //ƒNƒŠƒbƒN‚µ‚½ƒIƒuƒWƒFƒNƒg‚ªƒvƒŒƒCƒ„[‚©’²‚×‚é
-    //‘ÎÛ‚ÌƒvƒŒƒCƒ„[‚ğİ’è
+    //ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½×‚ï¿½
+    //ï¿½ÎÛ‚Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½İ’ï¿½
     public bool CheckPlayerSquare()
     {
         foreach (PlayerSquare player in playerList)
         {
-            //ƒS[ƒ‹‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[‚Í”ò‚Î‚·
+            //ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Í”ï¿½Î‚ï¿½
             if (player.IsGoal)
             {
                 continue;
             }
 
-            //ƒvƒŒƒCƒ„[‚ğ’²¸
+            //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ğ’²ï¿½
             if (player.currentAlphabet == selectedAlph && player.currentNum == selectedNum)
             {
-                //‘I‘ğ’†‚ÌƒvƒŒƒCƒ„[‚ğİ’è
+                //ï¿½Iï¿½ğ’†‚Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½İ’ï¿½
                 selectedPlayer = playerList.IndexOf(player);
                 return true;
             }
@@ -95,19 +96,19 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    //ƒNƒŠƒbƒN‚µ‚½ƒIƒuƒWƒFƒNƒg‚ªˆÚ“®‰Â”\ƒpƒlƒ‹‚©’²‚×‚é
+    //ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Ú“ï¿½ï¿½Â”\ï¿½pï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×‚ï¿½
     public bool CheckMovable()
     {
         if (selectedPlayer == -1) return false;
         
-        //‘I‘ğ’†‚ÌƒvƒŒƒCƒ„[‚ğæ“¾
+        //ï¿½Iï¿½ğ’†‚Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½æ“¾
         PlayerSquare player = playerList[selectedPlayer];
 
         List<int[]> around = SearchFourSquaresAround(selectedAlph, selectedNum);
 
         foreach (int[] squ in around)
         {
-            //ƒvƒŒƒCƒ„[‚ğ’²¸
+            //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ğ’²ï¿½
             if (player.currentAlphabet == squ[0] && player.currentNum == squ[1])
             {
                 return true;
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        //‘S‚Ä‚Ìƒ}ƒX‚ğŠÇ—‚µ‚Ä‚¢‚é“ñŸŒ³”z—ñ‚ğ‘‚«Š·‚¦‚é
+        //ï¿½Sï¿½Ä‚Ìƒ}ï¿½Xï¿½ï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ñŸŒï¿½ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         squareController
             .SquareArray
             [
@@ -129,12 +130,12 @@ public class PlayerController : MonoBehaviour
             .state = Square.SquareState.None;
         squareController.SquareArray[selectedAlph, selectedNum].state = Square.SquareState.Player;
 
-        //ƒvƒŒƒCƒ„[ƒŠƒXƒg‚ğXV
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Xï¿½V
         playerList[selectedPlayer].currentAlphabet = selectedAlph;
         playerList[selectedPlayer].currentNum = selectedNum;
 
-        //ƒtƒƒ“ƒgƒGƒ“ƒhˆ—
-        //ƒvƒŒƒCƒ„[‚ğˆÚ“®
+        //ï¿½tï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Gï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ú“ï¿½
         Transform trans = playerList[selectedPlayer].currentObj.transform;
         Vector3 endPos = squareController.SquareArray[selectedAlph, selectedNum].position;
         StartCoroutine(MoveToPosAnim.StartAnim(endPos, trans));
@@ -149,7 +150,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    //ƒQ[ƒ€ŠJn‚ÉƒvƒŒƒCƒ„[ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+    //ï¿½Qï¿½[ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Éƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ğ¶ï¿½
     void PlayerCreate()
     {
         foreach (PlayerSquare player in playerList)
@@ -162,12 +163,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚ğ¶¬(‚·‚×‚Ä‚ÌƒvƒŒƒCƒ„[)
+    //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½ğ¶ï¿½(ï¿½ï¿½ï¿½×‚Ä‚Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[)
     public void ShowMovableAllPlayer()
     {
         foreach (PlayerSquare player in playerList)
         {
-            //ƒS[ƒ‹‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Í”ò‚Î‚·
+            //ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Í”ï¿½Î‚ï¿½
             if (player.IsGoal)
             {
                 continue;
@@ -180,7 +181,7 @@ public class PlayerController : MonoBehaviour
 
             foreach (int[] squ in around)
             {
-                //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚ğ¶¬
+                //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½ğ¶ï¿½
                 GameObject obj = Instantiate(movablePrefab);
                 Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
                 obj.transform.localPosition = pos;
@@ -189,13 +190,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚ğ¶¬(ƒvƒŒƒCƒ„[w’è)
+    //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½ğ¶ï¿½(ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½wï¿½ï¿½)
     public void ShowMovableToSelectedPlayer()
     {
-        //‘I‘ğ’†‚ÌƒvƒŒƒCƒ„[‚ğæ“¾
+        //ï¿½Iï¿½ğ’†‚Ìƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½æ“¾
         PlayerSquare player = playerList[selectedPlayer];
 
-        //ƒS[ƒ‹‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Í”ò‚Î‚·
+        //ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Í”ï¿½Î‚ï¿½
         if (player.IsGoal)
         {
             return;
@@ -208,14 +209,14 @@ public class PlayerController : MonoBehaviour
 
         foreach (int[] squ in around)
         {
-            //ƒ}ƒX‚É‰½‚©‚ª‚ ‚ê‚ÎˆÚ“®‚Å‚«‚È‚¢‚Ì‚ÅŸ‚Ìƒ}ƒX‚É‚·‚é
+            //ï¿½}ï¿½Xï¿½É‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎˆÚ“ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½Ì‚Åï¿½ï¿½Ìƒ}ï¿½Xï¿½É‚ï¿½ï¿½ï¿½
             Debug.Log(squareController.SquareArray[squ[0], squ[1]].state);
             if (squareController.SquareArray[squ[0], squ[1]].state != Square.SquareState.None)
             {
                 continue;
             }
 
-            //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚ğ¶¬
+            //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½ğ¶ï¿½
             GameObject obj = Instantiate(movablePrefab);
             Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
             obj.transform.localPosition = pos;
@@ -223,14 +224,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //ˆÚ“®‰Â”\‚Èƒpƒlƒ‹‚ğíœ
+    //ï¿½Ú“ï¿½ï¿½Â”\ï¿½Èƒpï¿½lï¿½ï¿½ï¿½ï¿½ï¿½íœ
     public void DestroyMovable()
     {
         foreach (GameObject obj in movableList)
         {
             Destroy(obj);
         }
-        //ƒŠƒXƒg‚ğƒNƒŠƒA
+        //ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½A
         movableList.Clear();
     }
 
@@ -242,7 +243,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //üˆÍ4ƒ}ƒX‚ğæ“¾
+    //ï¿½ï¿½ï¿½ï¿½4ï¿½}ï¿½Xï¿½ï¿½ï¿½æ“¾
     List<int[]> SearchFourSquaresAround(int targetX, int targetY)
     {
         int x = targetX;
@@ -279,13 +280,19 @@ public class PlayerController : MonoBehaviour
 
             index++;
 
-            //‘¶İ‚µ‚È‚¢ƒ}ƒX–Ú‚Í”ò‚Î‚·
+            //ï¿½ï¿½ï¿½İ‚ï¿½ï¿½È‚ï¿½ï¿½}ï¿½Xï¿½Ú‚Í”ï¿½Î‚ï¿½
             if (x + px < 0 || x + px > 7 || z + pz < 0 || z + pz > 7)
             {
                 continue;
             }
 
-            //•Ô‚è’l‚ÉŠi”[
+            //ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½Í”ï¿½Î‚ï¿½
+            if (squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Block)
+            {
+                continue;
+            }
+
+            //ï¿½Ô‚ï¿½lï¿½ÉŠiï¿½[
             int[] tmp = { x + px, z + pz };
             result.Add(tmp);
         }
@@ -325,7 +332,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetSelectedPlayer()
     {
-        //ƒvƒŒƒCƒ„[‚Ì‘I‘ğó‘Ô‚ğ‰ğœ
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì‘Iï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½
         selectedPlayer = -1;
     }
 }
