@@ -21,12 +21,14 @@ public class GameManager : MonoBehaviour
     GoalManager goalManager; 
     StageDatas stageDatas;
 
+    float time = 0;
+    float interval = 1.0f;
+
     private void Awake()
     {
         //マスターデータをロード
         stageDatas = GetComponent<StageDatas>();
         stageDatas.LoadData();
-        Debug.Log("a");
         
     }
 
@@ -44,10 +46,9 @@ public class GameManager : MonoBehaviour
         {
             case gameState.enter:
                 //Debug.Log("ターン開始");
-                //移動可能なパネルを生成
-                playerController.ShowMovable();
-
+                playerController.ResetSelectedPlayer();
                 state = gameState.player;
+
                 break;
             case gameState.player:
                 //Debug.Log("プレイヤーターン");
@@ -56,12 +57,24 @@ public class GameManager : MonoBehaviour
                     //クリックしたオブジェクトをチェック
                     if (playerController.CheckClickedObject())
                     {
-                        //プレイヤーを動かす
-                        playerController.Move();
-                        //移動可能なパネルを消す
-                        playerController.DestroyMovable();
+                        //クリックしたマスをチェック
+                        if (playerController.CheckPlayerSquare())
+                        {
+                            //移動可能なパネルを消す
+                            playerController.DestroyMovable();
+                            //選択したプレイヤーで移動可能なパネルを生成
+                            playerController.ShowMovableToSelectedPlayer();
+                        }
+                        else if (playerController.CheckMovable())
+                        {
+                            //プレイヤーを動かす
+                            playerController.Move();
+                            //移動可能なパネルを消す
+                            playerController.DestroyMovable();
 
-                        state = gameState.interval;
+                            state = gameState.interval;
+                        }
+                        
                     }
                 }
                 break;
@@ -84,13 +97,16 @@ public class GameManager : MonoBehaviour
                 break;
             case gameState.enemy:
                 //Debug.Log("敵ターン");
-
-
-                state = gameState.end;
+                time += Time.deltaTime;
+                if (time > interval)
+                {
+                    time = 0;
+                    state = gameState.end;
+                }
+                
                 break;
             case gameState.end:
                 //Debug.Log("ターン終了");
-
 
                 state = gameState.enter;
                 break;

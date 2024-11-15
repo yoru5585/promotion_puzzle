@@ -12,7 +12,7 @@ public static class MoveToPosAnim
 
         while (elapsedTime < seconds)
         {
-            Debug.Log(elapsedTime);
+            //Debug.Log(elapsedTime);
             Vector3 tmp = Vector3.Lerp(startPos, endPos, (elapsedTime / seconds));
             objectToMove.position = new Vector3(tmp.x, 0.01f, tmp.z);
             elapsedTime += Time.deltaTime;

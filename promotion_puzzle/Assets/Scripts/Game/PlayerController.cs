@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     //選択したマス目
     int selectedAlph, selectedNum;
     //選択したプレイヤー
-    int selectedPlayer;
+    int selectedPlayer = -1;
 
 
     SquareController squareController;
@@ -66,34 +66,51 @@ public class PlayerController : MonoBehaviour
             Debug.Log(name);
             selectedAlph = int.Parse(name.Split(" ")[0]);
             selectedNum = int.Parse(name.Split(" ")[1]);
-            return CheckMovable();
+            return true;
         }
 
         return false;
     }
 
-    //クリックしたオブジェクトが移動可能パネルか調べる
-    bool CheckMovable()
+    //クリックしたオブジェクトがプレイヤーか調べる
+    //対象のプレイヤーを設定
+    public bool CheckPlayerSquare()
     {
+        foreach (PlayerSquare player in playerList)
+        {
+            //ゴールしているプレイヤーは飛ばす
+            if (player.IsGoal)
+            {
+                continue;
+            }
+
+            //プレイヤーを調査
+            if (player.currentAlphabet == selectedAlph && player.currentNum == selectedNum)
+            {
+                //選択中のプレイヤーを設定
+                selectedPlayer = playerList.IndexOf(player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //クリックしたオブジェクトが移動可能パネルか調べる
+    public bool CheckMovable()
+    {
+        if (selectedPlayer == -1) return false;
+        
+        //選択中のプレイヤーを取得
+        PlayerSquare player = playerList[selectedPlayer];
+
         List<int[]> around = SearchFourSquaresAround(selectedAlph, selectedNum);
 
         foreach (int[] squ in around)
         {
-            foreach (PlayerSquare player in playerList)
+            //プレイヤーを調査
+            if (player.currentAlphabet == squ[0] && player.currentNum == squ[1])
             {
-                //ゴールしているプレイヤーは飛ばす
-                if (player.IsGoal)
-                {
-                    continue;
-                }
-
-                //プレイヤーを調査
-                if (player.currentAlphabet == squ[0] && player.currentNum == squ[1])
-                {
-                    //選択中のプレイヤーを設定
-                    selectedPlayer = playerList.IndexOf(player);
-                    return true;
-                }
+                return true;
             }
         }
 
@@ -137,6 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach (PlayerSquare player in playerList)
         {
+            squareController.SquareArray[player.currentAlphabet, player.currentNum].state = Square.SquareState.Player;
             GameObject obj = Instantiate(playerPrefab);
             Vector3 pos = squareController.SquareArray[player.currentAlphabet, player.currentNum].position;
             obj.transform.localPosition = pos;
@@ -144,8 +162,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //移動可能なパネルを生成
-    public void ShowMovable()
+    //移動可能なパネルを生成(すべてのプレイヤー)
+    public void ShowMovableAllPlayer()
     {
         foreach (PlayerSquare player in playerList)
         {
@@ -171,6 +189,40 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //移動可能なパネルを生成(プレイヤー指定)
+    public void ShowMovableToSelectedPlayer()
+    {
+        //選択中のプレイヤーを取得
+        PlayerSquare player = playerList[selectedPlayer];
+
+        //ゴールしているオブジェクトは飛ばす
+        if (player.IsGoal)
+        {
+            return;
+        }
+
+        int x = player.currentAlphabet;
+        int z = player.currentNum;
+
+        List<int[]> around = SearchFourSquaresAround(x, z);
+
+        foreach (int[] squ in around)
+        {
+            //マスに何かがあれば移動できないので次のマスにする
+            Debug.Log(squareController.SquareArray[squ[0], squ[1]].state);
+            if (squareController.SquareArray[squ[0], squ[1]].state != Square.SquareState.None)
+            {
+                continue;
+            }
+
+            //移動可能なパネルを生成
+            GameObject obj = Instantiate(movablePrefab);
+            Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
+            obj.transform.localPosition = pos;
+            movableList.Add(obj);
+        }
+    }
+
     //移動可能なパネルを削除
     public void DestroyMovable()
     {
@@ -178,6 +230,8 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(obj);
         }
+        //リストをクリア
+        movableList.Clear();
     }
 
     public void DestroyPlayer()
@@ -267,5 +321,11 @@ public class PlayerController : MonoBehaviour
             num++;
         }
         return num;
+    }
+
+    public void ResetSelectedPlayer()
+    {
+        //プレイヤーの選択状態を解除
+        selectedPlayer = -1;
     }
 }
