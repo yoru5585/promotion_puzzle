@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 [System.Serializable]
 public class PlayerSquare
 {
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject movablePrefab;
     //移動可能なパネルのリスト
     List<GameObject> movableList = new List<GameObject>();
+    //選択中のプレイヤーの移動可能なパネルのマス目リスト
+    List<int[]> movableSquareList = new List<int[]>();
     //選択したマス目
     int selectedAlph, selectedNum;
     //選択したプレイヤー
@@ -103,15 +106,10 @@ public class PlayerController : MonoBehaviour
     {
         if (selectedPlayer == -1) return false;
 
-        //選択中のプレイヤーを取得
-        PlayerSquare player = playerList[selectedPlayer];
-
-        List<int[]> around = SearchFourSquaresAround(selectedAlph, selectedNum);
-
-        foreach (int[] squ in around)
+        foreach (int[] squ in movableSquareList)
         {
             //プレイヤーを調査
-            if (player.currentAlphabet == squ[0] && player.currentNum == squ[1])
+            if (selectedAlph == squ[0] && selectedNum == squ[1])
             {
                 return true;
             }
@@ -166,31 +164,31 @@ public class PlayerController : MonoBehaviour
     }
 
     //移動可能なパネルを生成(すべてのプレイヤー)
-    public void ShowMovableAllPlayer()
-    {
-        foreach (PlayerSquare player in playerList)
-        {
-            //ゴールしているオブジェクトは飛ばす
-            if (player.IsGoal)
-            {
-                continue;
-            }
+    //public void ShowMovableAllPlayer()
+    //{
+    //    foreach (PlayerSquare player in playerList)
+    //    {
+    //        //ゴールしているオブジェクトは飛ばす
+    //        if (player.IsGoal)
+    //        {
+    //            continue;
+    //        }
 
-            int x = player.currentAlphabet;
-            int z = player.currentNum;
+    //        int x = player.currentAlphabet;
+    //        int z = player.currentNum;
 
-            List<int[]> around = SearchFourSquaresAround(x, z);
+    //        List<int[]> around = SearchFourSquaresAround(x, z);
 
-            foreach (int[] squ in around)
-            {
-                //移動可能なパネルを生成
-                GameObject obj = Instantiate(movablePrefab);
-                Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
-                obj.transform.localPosition = pos;
-                movableList.Add(obj);
-            }
-        }
-    }
+    //        foreach (int[] squ in around)
+    //        {
+    //            //移動可能なパネルを生成
+    //            GameObject obj = Instantiate(movablePrefab);
+    //            Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
+    //            obj.transform.localPosition = pos;
+    //            movableList.Add(obj);
+    //        }
+    //    }
+    //}
 
     //移動可能なパネルを生成(プレイヤー指定)
     public void ShowMovableToSelectedPlayer()
@@ -212,9 +210,10 @@ public class PlayerController : MonoBehaviour
         foreach (int[] squ in around)
         {
             //マスに何かがあれば移動できないので次のマスにする
-            Debug.Log(squareController.SquareArray[squ[0], squ[1]].state);
+            //Debug.Log($"{squ[0]}, {squ[1]}:{squareController.SquareArray[squ[0], squ[1]].state}");
             if (squareController.SquareArray[squ[0], squ[1]].state != Square.SquareState.None)
             {
+                //Debug.Log($"{squ[0]}, {squ[1]}:Noneではない");
                 continue;
             }
 
@@ -222,7 +221,11 @@ public class PlayerController : MonoBehaviour
             GameObject obj = Instantiate(movablePrefab);
             Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
             obj.transform.localPosition = pos;
+            //リストに追加
             movableList.Add(obj);
+            int[] tmp = { squ[0], squ[1] };
+            movableSquareList.Add(tmp);
+            //Debug.Log(movableSquareList.Last()[0] + "aaa" + movableSquareList.Last()[1]);
         }
     }
 
@@ -235,6 +238,7 @@ public class PlayerController : MonoBehaviour
         }
         //リストをクリア
         movableList.Clear();
+        movableSquareList.Clear();
     }
 
     public void DestroyPlayer()
@@ -284,12 +288,6 @@ public class PlayerController : MonoBehaviour
 
             //存在しないマス目は飛ばす
             if (x + px < 0 || x + px > 7 || z + pz < 0 || z + pz > 7)
-            {
-                continue;
-            }
-
-            //ブロックのマス目も飛ばす
-            if (squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Block)
             {
                 continue;
             }
