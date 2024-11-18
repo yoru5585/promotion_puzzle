@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     int selectedAlph, selectedNum;
     //�I�������v���C���[
     int selectedPlayer = -1;
+    //アルファベット
+    string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
 
 
     SquareController squareController;
