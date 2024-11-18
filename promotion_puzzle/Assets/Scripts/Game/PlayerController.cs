@@ -5,33 +5,33 @@ using System;
 [System.Serializable]
 public class PlayerSquare
 {
-    //�A���t�@�x�b�g�s
+    //アルファベット行
     public int currentAlphabet;
-    //������
+    //数字列
     public int currentNum;
-    //�v���C���[�I�u�W�F�N�g
+    //プレイヤーオブジェクト
     public GameObject currentObj;
-    //�S�[��������
+    //ゴールしたか
     public bool IsGoal;
     public PlayerSquare Clone()
     {
-        // Object�^�ŕԂ��Ă���̂ŃL���X�g���K�v
+        // Object型で返ってくるのでキャストが必要
         return (PlayerSquare)MemberwiseClone();
     }
 }
 public class PlayerController : MonoBehaviour
 {
-    //�v���C���[�̏����܂Ƃ߂����X�g
+    //プレイヤーの情報をまとめたリスト
     [SerializeField] List<PlayerSquare> playerList = new List<PlayerSquare>();
-    //��������v���C���[��prefab
+    //生成するプレイヤーのprefab
     [SerializeField] GameObject playerPrefab;
-    //�ړ��\�ȃp�l����prefab
+    //移動可能なパネルのprefab
     [SerializeField] GameObject movablePrefab;
-    //�ړ��\�ȃp�l���̃��X�g
+    //移動可能なパネルのリスト
     List<GameObject> movableList = new List<GameObject>();
-    //�I�������}�X��
+    //選択したマス目
     int selectedAlph, selectedNum;
-    //�I�������v���C���[
+    //選択したプレイヤー
     int selectedPlayer = -1;
     //アルファベット
     string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H" };
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public bool CheckClickedObject()
     {
-        //hit�����I�u�W�F�N�g
+        //hitしたオブジェクト
         GameObject hitObject = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
@@ -75,22 +75,22 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    //�N���b�N�����I�u�W�F�N�g���v���C���[�����ׂ�
-    //�Ώۂ̃v���C���[��ݒ�
+    //クリックしたオブジェクトがプレイヤーか調べる
+    //対象のプレイヤーを設定
     public bool CheckPlayerSquare()
     {
         foreach (PlayerSquare player in playerList)
         {
-            //�S�[�����Ă���v���C���[�͔�΂�
+            //ゴールしているプレイヤーは飛ばす
             if (player.IsGoal)
             {
                 continue;
             }
 
-            //�v���C���[�𒲍�
+            //プレイヤーを調査
             if (player.currentAlphabet == selectedAlph && player.currentNum == selectedNum)
             {
-                //�I�𒆂̃v���C���[��ݒ�
+                //選択中のプレイヤーを設定
                 selectedPlayer = playerList.IndexOf(player);
                 return true;
             }
@@ -98,19 +98,19 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    //�N���b�N�����I�u�W�F�N�g���ړ��\�p�l�������ׂ�
+    //クリックしたオブジェクトが移動可能パネルか調べる
     public bool CheckMovable()
     {
         if (selectedPlayer == -1) return false;
-        
-        //�I�𒆂̃v���C���[���擾
+
+        //選択中のプレイヤーを取得
         PlayerSquare player = playerList[selectedPlayer];
 
         List<int[]> around = SearchFourSquaresAround(selectedAlph, selectedNum);
 
         foreach (int[] squ in around)
         {
-            //�v���C���[�𒲍�
+            //プレイヤーを調査
             if (player.currentAlphabet == squ[0] && player.currentNum == squ[1])
             {
                 return true;
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        //�S�Ẵ}�X���Ǘ����Ă���񎟌��z�������������
+        //全てのマスを管理している二次元配列を書き換える
         squareController
             .SquareArray
             [
@@ -132,12 +132,12 @@ public class PlayerController : MonoBehaviour
             .state = Square.SquareState.None;
         squareController.SquareArray[selectedAlph, selectedNum].state = Square.SquareState.Player;
 
-        //�v���C���[���X�g���X�V
+        //プレイヤーリストを更新
         playerList[selectedPlayer].currentAlphabet = selectedAlph;
         playerList[selectedPlayer].currentNum = selectedNum;
 
-        //�t�����g�G���h����
-        //�v���C���[���ړ�
+        //フロントエンド処理
+        //プレイヤーを移動
         Transform trans = playerList[selectedPlayer].currentObj.transform;
         Vector3 endPos = squareController.SquareArray[selectedAlph, selectedNum].position;
         StartCoroutine(MoveToPosAnim.StartAnim(endPos, trans));
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    //�Q�[���J�n���Ƀv���C���[�I�u�W�F�N�g�𐶐�
+    //ゲーム開始時にプレイヤーオブジェクトを生成
     void PlayerCreate()
     {
         foreach (PlayerSquare player in playerList)
@@ -165,12 +165,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //�ړ��\�ȃp�l���𐶐�(���ׂẴv���C���[)
+    //移動可能なパネルを生成(すべてのプレイヤー)
     public void ShowMovableAllPlayer()
     {
         foreach (PlayerSquare player in playerList)
         {
-            //�S�[�����Ă���I�u�W�F�N�g�͔�΂�
+            //ゴールしているオブジェクトは飛ばす
             if (player.IsGoal)
             {
                 continue;
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
             foreach (int[] squ in around)
             {
-                //�ړ��\�ȃp�l���𐶐�
+                //移動可能なパネルを生成
                 GameObject obj = Instantiate(movablePrefab);
                 Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
                 obj.transform.localPosition = pos;
@@ -192,13 +192,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //�ړ��\�ȃp�l���𐶐�(�v���C���[�w��)
+    //移動可能なパネルを生成(プレイヤー指定)
     public void ShowMovableToSelectedPlayer()
     {
-        //�I�𒆂̃v���C���[���擾
+        //選択中のプレイヤーを取得
         PlayerSquare player = playerList[selectedPlayer];
 
-        //�S�[�����Ă���I�u�W�F�N�g�͔�΂�
+        //ゴールしているオブジェクトは飛ばす
         if (player.IsGoal)
         {
             return;
@@ -211,14 +211,14 @@ public class PlayerController : MonoBehaviour
 
         foreach (int[] squ in around)
         {
-            //�}�X�ɉ���������Έړ��ł��Ȃ��̂Ŏ��̃}�X�ɂ���
+            //マスに何かがあれば移動できないので次のマスにする
             Debug.Log(squareController.SquareArray[squ[0], squ[1]].state);
             if (squareController.SquareArray[squ[0], squ[1]].state != Square.SquareState.None)
             {
                 continue;
             }
 
-            //�ړ��\�ȃp�l���𐶐�
+            //移動可能なパネルを生成
             GameObject obj = Instantiate(movablePrefab);
             Vector3 pos = squareController.SquareArray[squ[0], squ[1]].position;
             obj.transform.localPosition = pos;
@@ -226,14 +226,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //�ړ��\�ȃp�l�����폜
+    //移動可能なパネルを削除
     public void DestroyMovable()
     {
         foreach (GameObject obj in movableList)
         {
             Destroy(obj);
         }
-        //���X�g���N���A
+        //リストをクリア
         movableList.Clear();
     }
 
@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //����4�}�X���擾
+    //周囲4マスを取得
     List<int[]> SearchFourSquaresAround(int targetX, int targetY)
     {
         int x = targetX;
@@ -282,19 +282,19 @@ public class PlayerController : MonoBehaviour
 
             index++;
 
-            //���݂��Ȃ��}�X�ڂ͔�΂�
+            //存在しないマス目は飛ばす
             if (x + px < 0 || x + px > 7 || z + pz < 0 || z + pz > 7)
             {
                 continue;
             }
 
-            //�u���b�N�͔�΂�
+            //ブロックのマス目も飛ばす
             if (squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Block)
             {
                 continue;
             }
 
-            //�Ԃ�l�Ɋi�[
+            //返り値に格納
             int[] tmp = { x + px, z + pz };
             result.Add(tmp);
         }
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetSelectedPlayer()
     {
-        //�v���C���[�̑I����Ԃ�����
+        //プレイヤーの選択状態を解除
         selectedPlayer = -1;
     }
 }
