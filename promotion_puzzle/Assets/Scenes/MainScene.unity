@@ -3465,6 +3465,8 @@ GameObject:
   - component: {fileID: 1198636709}
   - component: {fileID: 1198636718}
   - component: {fileID: 1198636717}
+  - component: {fileID: 1198636720}
+  - component: {fileID: 1198636719}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -3620,6 +3622,31 @@ MonoBehaviour:
   stageSelect: {fileID: 1251028642}
   title: {fileID: 1253325913}
   parent: {fileID: 962615689}
+--- !u!114 &1198636719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198636705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea212f6c80b829488e32cec1df9c4cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ruiterPrefab: {fileID: 2385405619039936163, guid: 01adfc6834650644381f272e98a5ca01, type: 3}
+--- !u!114 &1198636720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198636705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a999f60c2147ae34abbf21c5b8da6c89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1220914513
 GameObject:
   m_ObjectHideFlags: 0

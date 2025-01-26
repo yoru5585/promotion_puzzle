@@ -9,4 +9,6 @@ public class StageData : ScriptableObject
     public PlayerSquare[] playerOriginSqu;
     //ゴールの位置(マスターデータ)
     public GoalSquare[] goalOriginSqu;
+    //ナイトの初期位置(マスターデータ)
+    public EnemySquare[] ruiterOriginSqu;
 }

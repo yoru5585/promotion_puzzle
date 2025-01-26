@@ -20,9 +20,10 @@ public class GameManager : MonoBehaviour
     PlayerController playerController;
     GoalManager goalManager; 
     StageDatas stageDatas;
+    EnemyManager enemyManager;
 
     float time = 0;
-    float interval = 1.0f;
+    float interval = 1.5f;
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         goalManager = GetComponent<GoalManager>();
+        enemyManager = GetComponent<EnemyManager>();
     }
 
     void Update()
@@ -101,6 +103,7 @@ public class GameManager : MonoBehaviour
                 if (time > interval)
                 {
                     time = 0;
+                    enemyManager.MoveAllEnemy();
                     state = gameState.end;
                 }
                 

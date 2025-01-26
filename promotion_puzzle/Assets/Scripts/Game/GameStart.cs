@@ -19,6 +19,7 @@ public class GameStart : MonoBehaviour
     GoalManager goalManager;
     CameraController cameraController;
     StageDatas stageDatas;
+    EnemyManager enemyManager;
 
 
     int currentStageNum;
@@ -32,6 +33,7 @@ public class GameStart : MonoBehaviour
         goalManager = GetComponent<GoalManager>();
         cameraController = GetComponent<CameraController>();
         stageDatas = GetComponent<StageDatas>();
+        enemyManager = GetComponent<EnemyManager>();
 
     }
     public void OnGameStart(int stageNum = 0)
@@ -53,6 +55,7 @@ public class GameStart : MonoBehaviour
         squareController.Init();
         playerController.Init(currentStageNum);
         goalManager.Init(currentStageNum);
+        enemyManager.Init(currentStageNum);
         menu.SetActive(true);
         game.SetActive(true);
         gameManager.IsGameStop = false;
