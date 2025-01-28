@@ -1,0 +1,4 @@
+*.cs text eol=lf
+*.cs diff
+*.cs -crlf
+
