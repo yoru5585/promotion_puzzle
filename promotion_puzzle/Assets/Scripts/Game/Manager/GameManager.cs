@@ -106,7 +106,8 @@ public class GameManager : MonoBehaviour
                     enemyManager.MoveAllEnemy();
                     state = gameState.end;
                 }
-                
+                //ゲームオーバーチェック
+
                 break;
             case gameState.end:
                 //Debug.Log("ターン終了");
