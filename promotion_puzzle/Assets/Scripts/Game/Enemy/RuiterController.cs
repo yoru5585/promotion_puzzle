@@ -52,6 +52,14 @@ public class RuiterController : MonoBehaviour, EnemyBase
             ruiter.currentObj = obj;
         }
     }
+    //“G‚ğíœ
+    public void EnemyDestroy()
+    {
+        foreach (EnemySquare ruiter in ruiterList)
+        {
+            Destroy(ruiter.currentObj);
+        }
+    }
     //ˆÚ“®‰Â”\‚Èƒ}ƒX‚ğ’²¸
     public void SearchMovableSqu(Vector2 targetVec2)
     {

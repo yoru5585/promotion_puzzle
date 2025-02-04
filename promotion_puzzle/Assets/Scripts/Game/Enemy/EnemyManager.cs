@@ -42,4 +42,12 @@ public class EnemyManager : MonoBehaviour
             enemyBase.Move();
         }
     }
+
+    public void DestroyAllEnemy()
+    {
+        foreach (var enemyBase in enemyBaseList)
+        {
+            enemyBase.EnemyDestroy();
+        }
+    }
 }

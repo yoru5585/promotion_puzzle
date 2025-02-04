@@ -87,6 +87,7 @@ public class GameStart : MonoBehaviour
     {
         cameraController.Stop();
         playerController.DestroyPlayer();
+        enemyManager.DestroyAllEnemy();
         stageAnim.gameObject.GetComponent<TextMeshProUGUI>().text = $"STAGE {currentStageNum + 1}";
         stageAnim.SetTrigger("StageTrigger");
     }
