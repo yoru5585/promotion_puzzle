@@ -15,9 +15,9 @@ public interface EnemyBase
 
 public class EnemyMonoBehaviour : MonoBehaviour
 {
-    [HideInInspector] public GameoverManager gameoverManager;
-    [HideInInspector] public SquareController squareController;
-    [HideInInspector] public StageDatas stageDatas;
+    protected GameoverManager gameoverManager;
+    protected SquareController squareController;
+    protected StageDatas stageDatas;
 
     private void Start()
     {

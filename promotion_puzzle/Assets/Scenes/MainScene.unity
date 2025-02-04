@@ -2599,9 +2599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea212f6c80b829488e32cec1df9c4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameoverManager: {fileID: 0}
-  squareController: {fileID: 0}
-  stageDatas: {fileID: 0}
   ruiterPrefab: {fileID: 2385405619039936163, guid: 01adfc6834650644381f272e98a5ca01, type: 3}
 --- !u!114 &863648622
 MonoBehaviour:
@@ -3552,6 +3549,7 @@ MonoBehaviour:
   title: {fileID: 1253325913}
   game: {fileID: 1847096371}
   menu: {fileID: 1186448863}
+  blockPrefab: {fileID: 5666534000059878163, guid: 9c61e00f8ba3a0542946aa1dee83bf1a, type: 3}
 --- !u!4 &1198636707
 Transform:
   m_ObjectHideFlags: 0

@@ -57,6 +57,7 @@ public class GameStart : MonoBehaviour
         playerController.Init(currentStageNum);
         goalManager.Init(currentStageNum);
         enemyManager.Init(currentStageNum);
+        BlockCreate();
         menu.SetActive(true);
         game.SetActive(true);
         gameManager.IsGameStop = false;
@@ -100,7 +101,36 @@ public class GameStart : MonoBehaviour
         cameraController.Stop();
         playerController.DestroyPlayer();
         enemyManager.DestroyAllEnemy();
+        BlockDestroy();
         stageAnim.gameObject.GetComponent<TextMeshProUGUI>().text = $"STAGE {currentStageNum + 1}";
         stageAnim.SetTrigger("StageTrigger");
+    }
+
+    //ブロックの処理
+
+    //ブロック管理用
+    [SerializeField] GameObject blockPrefab;
+    List<GameObject> blockObjList = new List<GameObject>();
+    void BlockCreate()
+    {
+        if (stageDatas.stageDataList[currentStageNum].blockOriginSqu == null) return;
+
+        foreach (Vector2 origin in stageDatas.stageDataList[currentStageNum].blockOriginSqu)
+        {
+            squareController.SquareArray[(int)origin.x, (int)origin.y].state = Square.SquareState.Block;
+            GameObject obj = Instantiate(blockPrefab);
+            Vector3 pos = squareController.SquareArray[(int)origin.x, (int)origin.y].position;
+            obj.transform.localPosition = pos;
+            blockObjList.Add(obj);
+        }
+    }
+
+    void BlockDestroy()
+    {
+        for (int i = 0; i < blockObjList.Count; i++)
+        {
+            Destroy(blockObjList[i]);
+        }
+        blockObjList.Clear();
     }
 }

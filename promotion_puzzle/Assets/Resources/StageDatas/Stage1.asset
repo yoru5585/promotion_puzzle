@@ -42,5 +42,9 @@ MonoBehaviour:
   - Alphabet: 0
     Num: 7
     Effect: {fileID: 0}
+  blockOriginSqu:
+  - {x: 3, y: 4}
+  - {x: 2, y: 2}
   ruiterOriginSqu:
-  - {x: 1, y: 1}
+  - currentPos: {x: 0, y: 0}
+    currentObj: {fileID: 0}
