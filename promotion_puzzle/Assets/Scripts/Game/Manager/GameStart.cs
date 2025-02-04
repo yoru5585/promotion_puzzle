@@ -20,6 +20,7 @@ public class GameStart : MonoBehaviour
     CameraController cameraController;
     StageDatas stageDatas;
     EnemyManager enemyManager;
+    GameoverManager gameoverManager;
 
 
     int currentStageNum;
@@ -33,8 +34,8 @@ public class GameStart : MonoBehaviour
         goalManager = GetComponent<GoalManager>();
         cameraController = GetComponent<CameraController>();
         stageDatas = GetComponent<StageDatas>();
-        enemyManager = GetComponent<EnemyManager>();
-
+        enemyManager = GetComponentInChildren<EnemyManager>();
+        gameoverManager = GetComponent<GameoverManager>();
     }
     public void OnGameStart(int stageNum = 0)
     {
@@ -59,11 +60,22 @@ public class GameStart : MonoBehaviour
         menu.SetActive(true);
         game.SetActive(true);
         gameManager.IsGameStop = false;
+        gameoverManager.IsGameover = false;
     }
 
     public void ObjAnimEnd()
     {
         ShowStageText();
+    }
+
+    public void GameReload()
+    {
+        //ステージをリロードする用
+        StartCoroutine(Delay.DelayMethod(2f, () =>
+        {
+            ShowStageText();
+            goalManager.GoalDeatroy();
+        }));
     }
 
     public void GameContinue()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.71261984, g: 0.5480652, b: 0.42173365, a: 1}
+  m_IndirectSpecularColor: {r: 0.7125952, g: 0.5480392, b: 0.4216891, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2554,6 +2554,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779850429}
   m_CullTransparentMesh: 1
+--- !u!1 &863648619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 863648620}
+  - component: {fileID: 863648622}
+  - component: {fileID: 863648621}
+  m_Layer: 0
+  m_Name: Enemys
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &863648620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863648619}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1198636707}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &863648621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863648619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea212f6c80b829488e32cec1df9c4cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameoverManager: {fileID: 0}
+  squareController: {fileID: 0}
+  stageDatas: {fileID: 0}
+  ruiterPrefab: {fileID: 2385405619039936163, guid: 01adfc6834650644381f272e98a5ca01, type: 3}
+--- !u!114 &863648622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863648619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a999f60c2147ae34abbf21c5b8da6c89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &906538544
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,17 +3517,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1198636707}
-  - component: {fileID: 1198636715}
-  - component: {fileID: 1198636706}
   - component: {fileID: 1198636711}
+  - component: {fileID: 1198636706}
+  - component: {fileID: 1198636715}
   - component: {fileID: 1198636714}
+  - component: {fileID: 1198636719}
   - component: {fileID: 1198636708}
   - component: {fileID: 1198636710}
   - component: {fileID: 1198636709}
   - component: {fileID: 1198636718}
   - component: {fileID: 1198636717}
-  - component: {fileID: 1198636720}
-  - component: {fileID: 1198636719}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -3504,7 +3564,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 863648620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1198636708
@@ -3631,22 +3692,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1198636705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ea212f6c80b829488e32cec1df9c4cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bd685eb959a8ae4389d99ea57c7887b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ruiterPrefab: {fileID: 2385405619039936163, guid: 01adfc6834650644381f272e98a5ca01, type: 3}
---- !u!114 &1198636720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198636705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a999f60c2147ae34abbf21c5b8da6c89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  stageAnim: {fileID: 646214725}
+  game: {fileID: 1847096371}
+  menu: {fileID: 1186448863}
 --- !u!1 &1220914513
 GameObject:
   m_ObjectHideFlags: 0

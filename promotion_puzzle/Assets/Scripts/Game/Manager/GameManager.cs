@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     GoalManager goalManager; 
     StageDatas stageDatas;
     EnemyManager enemyManager;
+    GameoverManager gameoverManager;
 
     float time = 0;
     float interval = 1.5f;
@@ -37,7 +38,8 @@ public class GameManager : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         goalManager = GetComponent<GoalManager>();
-        enemyManager = GetComponent<EnemyManager>();
+        enemyManager = GetComponentInChildren<EnemyManager>();
+        gameoverManager = GetComponent<GameoverManager>();
     }
 
     void Update()
@@ -106,11 +108,16 @@ public class GameManager : MonoBehaviour
                     enemyManager.MoveAllEnemy();
                     state = gameState.end;
                 }
-                //ゲームオーバーチェック
-
                 break;
             case gameState.end:
                 //Debug.Log("ターン終了");
+
+                //ゲームオーバーチェック
+                if (gameoverManager.IsGameover)
+                {
+                    gameoverManager.ShowResult();
+                    IsGameStop = true;
+                }
 
                 state = gameState.enter;
                 break;

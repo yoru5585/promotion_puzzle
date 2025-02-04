@@ -12,3 +12,17 @@ public interface EnemyBase
     public Vector2 GetNearestPlayerSqu();
     public void Move();
 }
+
+public class EnemyMonoBehaviour : MonoBehaviour
+{
+    [HideInInspector] public GameoverManager gameoverManager;
+    [HideInInspector] public SquareController squareController;
+    [HideInInspector] public StageDatas stageDatas;
+
+    private void Start()
+    {
+        gameoverManager = GetComponentInParent<GameoverManager>();
+        squareController = GetComponentInParent<SquareController>();
+        stageDatas = GetComponentInParent<StageDatas>();
+    }
+}

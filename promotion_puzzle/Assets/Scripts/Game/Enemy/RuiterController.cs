@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class RuiterController : MonoBehaviour, EnemyBase
+public class RuiterController : EnemyMonoBehaviour, EnemyBase
 {
     //敵のナイトの位置をまとめたリスト
     List<EnemySquare> ruiterList = new List<EnemySquare>();
@@ -12,15 +12,6 @@ public class RuiterController : MonoBehaviour, EnemyBase
     List<Vector2> movableList = new List<Vector2>();
     //生成する敵のPrefab
     [SerializeField] GameObject ruiterPrefab;
-
-    SquareController squareController;
-    StageDatas stageDatas;
-
-    private void Start()
-    {
-        squareController = GetComponent<SquareController>();
-        stageDatas = GetComponent<StageDatas>();
-    }
 
     public void Init(int stageNum)
     {
@@ -175,7 +166,15 @@ public class RuiterController : MonoBehaviour, EnemyBase
                     (int)ruiterList[i].currentPos.y
                 ]
                 .state = Square.SquareState.None;
-            squareController.SquareArray[(int)nearestSqu.x, (int)nearestSqu.y].state = Square.SquareState.Enemy;
+            //書き込み先マスがPlayerであればゲームオーバー
+            if (squareController.SquareArray[(int)nearestSqu.x, (int)nearestSqu.y].state == Square.SquareState.Player)
+            {
+                gameoverManager.IsGameover = true;
+            }
+            else
+            {
+                squareController.SquareArray[(int)nearestSqu.x, (int)nearestSqu.y].state = Square.SquareState.Enemy;
+            }
 
             //敵リストを更新
             ruiterList[i].currentPos = nearestSqu;
