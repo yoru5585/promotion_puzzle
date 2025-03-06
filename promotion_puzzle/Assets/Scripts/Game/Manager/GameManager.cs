@@ -44,8 +44,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (IsGameStop) return;
+        //デバッグ用
+        if (Input.GetKeyDown("a"))
+        {
+            goalManager.ShowResult();
+            state = gameState.enter;
+            IsGameStop = true;
+        }
 
+        if (IsGameStop) return;
+        
         switch (state)
         {
             case gameState.enter:
@@ -93,7 +101,9 @@ public class GameManager : MonoBehaviour
                     {
                         //クリア
                         goalManager.ShowResult();
+                        state = gameState.enter;
                         IsGameStop = true;
+                        return;
                     }
                 }
 

@@ -15,4 +15,6 @@ public class StageData : ScriptableObject
     public Vector2[] blockOriginSqu;
     //ナイトの初期位置
     public EnemySquare[] ruiterOriginSqu;
+    //ビショップの初期位置
+    public EnemySquare[] loperOriginSqu;
 }

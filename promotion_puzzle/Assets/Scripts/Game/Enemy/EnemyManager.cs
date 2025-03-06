@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class EnemySquare
@@ -20,34 +21,34 @@ public class EnemySquare
 
 public class EnemyManager : MonoBehaviour
 {
-    public List<EnemyBase> enemyBaseList = new List<EnemyBase>();
+    public List<EnemyMonoBehaviour> EnemyList = new List<EnemyMonoBehaviour>();
 
     public void Start()
     {
-        enemyBaseList.AddRange(GetComponents<EnemyBase>());
+        EnemyList.AddRange(GetComponents<EnemyMonoBehaviour>());
     }
 
     public void Init(int stageNum)
     {
-        foreach (var enemyBase in enemyBaseList)
+        foreach (var enemy in EnemyList)
         {
-            enemyBase.Init(stageNum);
+            enemy.Init(stageNum);
         }
     }
 
     public void MoveAllEnemy()
     {
-        foreach (var enemyBase in enemyBaseList)
+        foreach (var enemy in EnemyList)
         {
-            enemyBase.Move();
+            enemy.Move();
         }
     }
 
     public void DestroyAllEnemy()
     {
-        foreach (var enemyBase in enemyBaseList)
+        foreach (var enemy in EnemyList)
         {
-            enemyBase.EnemyDestroy();
+            enemy.EnemyDestroy();
         }
     }
 }

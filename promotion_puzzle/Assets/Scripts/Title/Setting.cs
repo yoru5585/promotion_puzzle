@@ -6,6 +6,7 @@ public class Setting : MonoBehaviour
 {
     [SerializeField] GameObject setting;
     [SerializeField] GameObject title;
+    [SerializeField] GameObject help;
     [SerializeField] AudioSource BGM;
     [SerializeField] AudioSource SE;
 
@@ -29,5 +30,10 @@ public class Setting : MonoBehaviour
     public void volSE(float input)
     {
         SE.volume = input / 10;
+    }
+
+    public void SwitchHelpImg(bool b)
+    {
+        help.SetActive(b);
     }
 }
