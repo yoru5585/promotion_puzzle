@@ -16,11 +16,25 @@ MonoBehaviour:
   - currentAlphabet: 1
     currentNum: 4
     currentObj: {fileID: 0}
+    IsGoal: 0
   - currentAlphabet: 0
     currentNum: 0
     currentObj: {fileID: 0}
+    IsGoal: 0
   goalOriginSqu:
   - Alphabet: 7
     Num: 7
+    Effect: {fileID: 0}
   - Alphabet: 4
     Num: 5
+    Effect: {fileID: 0}
+  blockOriginSqu:
+  - {x: 2, y: 3}
+  - {x: 5, y: 3}
+  - {x: 1, y: 7}
+  - {x: 3, y: 6}
+  ruiterOriginSqu:
+  - currentPos: {x: 1, y: 2}
+    currentObj: {fileID: 0}
+  - currentPos: {x: 5, y: 5}
+    currentObj: {fileID: 0}

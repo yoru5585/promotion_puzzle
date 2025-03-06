@@ -112,7 +112,8 @@ public class RuiterController : EnemyMonoBehaviour, EnemyBase
             }
 
             //マスに何かがあれば移動できないので次のマスにする
-            if (squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Enemy)
+            if (squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Enemy 
+                || squareController.SquareArray[x + px, z + pz].state == Square.SquareState.Block)
             {
                 continue;
             }
