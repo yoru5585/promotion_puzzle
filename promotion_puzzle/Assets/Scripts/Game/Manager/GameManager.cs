@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         //マスターデータをロード
         stageDatas = GetComponent<StageDatas>();
-        stageDatas.LoadData();
+        stageDatas.LoadAllDataToList();
         
     }
 

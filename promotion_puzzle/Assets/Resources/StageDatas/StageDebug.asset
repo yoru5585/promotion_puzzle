@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a8a49c95eb733f4892a203d424bd942, type: 3}
-  m_Name: Stage3
+  m_Name: StageDebug
   m_EditorClassIdentifier: 
+  stageName: "\u30C7\u30D0\u30C3\u30B0\u7528\n\u30B9\u30C6\u30FC\u30B8"
   playerOriginSqu:
   - currentAlphabet: 0
     currentNum: 3
@@ -41,4 +42,7 @@ MonoBehaviour:
   - currentPos: {x: 3, y: 5}
     currentObj: {fileID: 0}
   - currentPos: {x: 5, y: 2}
+    currentObj: {fileID: 0}
+  trmOriginSqu:
+  - currentPos: {x: 7, y: 2}
     currentObj: {fileID: 0}

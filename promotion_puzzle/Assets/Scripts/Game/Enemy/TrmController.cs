@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class LoperManager : EnemyMonoBehaviour
+public class TrmController : EnemyMonoBehaviour
 {
     public override void SetEnemyList(int stageNum)
     {
         enemyList.Clear();
-        if (stageDatas.stageDataList[stageNum].loperOriginSqu != null)
+        if (stageDatas.stageDataList[stageNum].trmOriginSqu != null)
         {
-            foreach (EnemySquare origin in stageDatas.stageDataList[stageNum].loperOriginSqu)
+            foreach (EnemySquare origin in stageDatas.stageDataList[stageNum].trmOriginSqu)
             {
                 enemyList.Add(origin.Clone());
             }
         }
-
     }
 
     //移動可能なマスを調査
@@ -31,25 +29,25 @@ public class LoperManager : EnemyMonoBehaviour
 
         int index = 0;
 
-        //ビショップはななめ移動
+        //ルークは上下移動
         while (index < 4)
         {
             switch (index)
             {
                 case 0:
                     px = 1;
-                    pz = 1;
+                    pz = 0;
                     break;
                 case 1:
-                    px = 1;
-                    pz = -1;
+                    px = 0;
+                    pz = 1;
                     break;
                 case 2:
                     px = -1;
-                    pz = 1;
+                    pz = 0;
                     break;
                 case 3:
-                    px = -1;
+                    px = 0;
                     pz = -1;
                     break;
             }

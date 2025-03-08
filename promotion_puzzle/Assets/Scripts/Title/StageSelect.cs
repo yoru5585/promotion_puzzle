@@ -36,11 +36,18 @@ public class StageSelect : MonoBehaviour
         title.SetActive(true);
     }
 
+    public void LoadCreativeScene()
+    {
+        FadeManager.Instance.LoadScene("CreativeScene", 1.0f);
+    }
+
     void SetUI()
     {
         stageTotalNum = stageDatas.GetStageNum();
-        //0番目は既にあるので個別に入れる
-        origin.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = $"STAGE 1";
+        //ステージ名を代入（0番目は既にあるので個別に入れる）
+        string str = stageDatas.stageDataList[0].stageName;
+        origin.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = (str == "") ? $"STAGE 1" : str;
+
         origin.GetComponent<Button>().onClick.AddListener(() => 
         {
             stageSelect.SetActive(false);
@@ -50,7 +57,8 @@ public class StageSelect : MonoBehaviour
         for (int i = 1; i < stageTotalNum; i++)
         {
             GameObject obj = Instantiate(origin, parent);
-            obj.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = $"STAGE {i + 1}";
+            str = stageDatas.stageDataList[i].stageName;
+            obj.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = (str == "") ? $"STAGE {i + 1}" : str;
             int capturedIndex = i; // 新しい変数を作成し、ループの現在の値をキャプチャ
             obj.GetComponent<Button>().onClick.AddListener(() =>
             {
