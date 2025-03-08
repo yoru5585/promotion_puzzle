@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Windows;
 
 public enum State
 {
@@ -20,6 +21,7 @@ public class StageEditManager : MonoBehaviour
     [SerializeField] TMP_Text text;
     [SerializeField] TMP_Text selectedText;
     [SerializeField] TMP_InputField inputField;
+    [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] Transform parent;
     List<ButtonInfo> squareList = new List<ButtonInfo>();
     string selectedFileName;
@@ -38,6 +40,8 @@ public class StageEditManager : MonoBehaviour
     void setup()
     {
         squareList.Clear();
+        selectedFileName = null;
+        selectedText.text = selectedFileName;
         int count = 0;
         foreach (Transform obj in parent)
         {
@@ -54,6 +58,9 @@ public class StageEditManager : MonoBehaviour
     //画面上のデータを、エディット用StageDataに書き込み
     void ParseToStageData()
     {
+        string stgaeName = editStageData.stageName;
+        string fileName = editStageData.fileName;
+        editStageData = ScriptableObject.CreateInstance<StageData>();
         foreach (var squ in squareList)
         {
             switch (squ.state)
@@ -92,6 +99,8 @@ public class StageEditManager : MonoBehaviour
                     break;
             }
         }
+        editStageData.stageName = stgaeName;
+        editStageData.fileName = fileName;
     }
     //エディット用StageDataを、画面上のデータに書き込み
     void ParseToGUI()
@@ -176,31 +185,38 @@ public class StageEditManager : MonoBehaviour
     //フォルダ内のデータを一覧表示
     public void DispStageFiles()
     {
+        List<string> optionList = new List<string>();
         string[] names = stageDatas.GetDirectoryFileName();
         activeFileName = "";
         foreach (string name in names)
         {
             activeFileName += $"{name}\n";
+            optionList.Add(name);
         }
         text.text = activeFileName;
+        dropdown.ClearOptions();
+        dropdown.AddOptions(optionList);
+
     }
     //新規ファイル作成
     public void OnAddButtonClicked()
     {
-        string input = inputField.text;
-        if (CheckName(input)) return;
+        string input = inputField.text + ".json";
+        if (activeFileName.Contains(input)|| input == null || input.Equals("")) return;
 
         selectedFileName = input;
         selectedText.text = input;
         ParseToStageData();
-        editStageData.fileName = input;
+        editStageData.fileName = selectedFileName;
+        editStageData.stageName = selectedFileName;
         stageDatas.SaveDataToJson(input, editStageData);
         DispStageFiles();
     }
     //ファイルをロード
     public void OnLoadButtonClicked()
     {
-        string input = inputField.text;
+        //string input = inputField.text;
+        string input = dropdown.options[dropdown.value].text;
         if (!CheckName(input)) return;
 
         setup();
@@ -213,22 +229,27 @@ public class StageEditManager : MonoBehaviour
     //編集中ファイルをセーブ
     public void OnSaveButtonClicked()
     {
+        if (!CheckName(selectedFileName)) return;
         ParseToStageData();
         stageDatas.SaveDataToJson(selectedFileName, editStageData);
     }
-
+    //選択したファイルを削除
     public void OnDeleteButtonClicked()
     {
-        string input = inputField.text;
+        //string input = inputField.text;
+        string input = dropdown.options[dropdown.value].text;
         if (!CheckName(input)) return;
 
         stageDatas.DeleteData(input);
+        selectedFileName = null;
+        selectedText.text = selectedFileName;
+        ClearGUIData();
         DispStageFiles();
     }
 
     bool CheckName(string name)
     {
-        return (activeFileName.Contains(name) && !name.Equals("\n") && !name.Equals(""));
+        return (activeFileName.Contains(name) && name != null && !name.Equals(""));
     }
 
     public void LoadMainScene()

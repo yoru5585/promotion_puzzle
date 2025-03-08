@@ -58,12 +58,12 @@ public class StageDatas : MonoBehaviour
     public StageData LoadDataFromName(string fileName)
     {
         folderPath = Application.persistentDataPath + "\\StageDatas";
-        string jsonText = File.ReadAllText($"{folderPath}\\{fileName}.json");
+        string jsonText = File.ReadAllText($"{folderPath}\\{fileName}");
         //空のデータを生成しておく
         StageData myData = ScriptableObject.CreateInstance<StageData>();
         //jsonをロード
         JsonUtility.FromJsonOverwrite(jsonText, myData);
-        Debug.Log($"Loaded JSON to: {folderPath}\\{fileName}.json");
+        Debug.Log($"Loaded JSON to: {folderPath}\\{fileName}");
         return myData;
     }
 
@@ -71,13 +71,13 @@ public class StageDatas : MonoBehaviour
     {
         //jsonに変換
         string json = JsonUtility.ToJson(myData, true);
-        File.WriteAllText($"{folderPath}\\{fileName}.json", json);
-        Debug.Log($"Saved JSON to: {folderPath}\\{fileName}.json");
+        File.WriteAllText($"{folderPath}\\{fileName}", json);
+        Debug.Log($"Saved JSON to: {folderPath}\\{fileName}");
     }
 
     public void DeleteData(string fileName)
     {
-        File.Delete($"{folderPath}\\{fileName}.json");
+        File.Delete($"{folderPath}\\{fileName}");
     }
 
     public string[] GetDirectoryFileName()

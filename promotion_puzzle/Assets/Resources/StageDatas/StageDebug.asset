@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8a49c95eb733f4892a203d424bd942, type: 3}
   m_Name: StageDebug
   m_EditorClassIdentifier: 
+  fileName: StageDebug
   stageName: "\u30C7\u30D0\u30C3\u30B0\u7528\n\u30B9\u30C6\u30FC\u30B8"
   playerOriginSqu:
   - currentAlphabet: 0

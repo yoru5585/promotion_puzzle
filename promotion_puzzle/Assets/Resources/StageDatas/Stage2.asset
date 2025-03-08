@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8a49c95eb733f4892a203d424bd942, type: 3}
   m_Name: Stage2
   m_EditorClassIdentifier: 
+  fileName: Stage2
+  stageName: 
   playerOriginSqu:
   - currentAlphabet: 1
     currentNum: 4
@@ -38,3 +40,5 @@ MonoBehaviour:
     currentObj: {fileID: 0}
   - currentPos: {x: 5, y: 5}
     currentObj: {fileID: 0}
+  loperOriginSqu: []
+  trmOriginSqu: []
